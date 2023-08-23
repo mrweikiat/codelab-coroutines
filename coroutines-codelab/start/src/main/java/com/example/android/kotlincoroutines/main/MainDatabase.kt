@@ -32,7 +32,7 @@ import androidx.room.RoomDatabase
  * Title represents the title fetched from the network
  */
 @Entity
-data class Title constructor(val title: String, @PrimaryKey val id: Int = 0)
+data class Title(val title: String, @PrimaryKey val id: Int = 0)
 
 /***
  * Very small database that will hold one title
@@ -40,7 +40,7 @@ data class Title constructor(val title: String, @PrimaryKey val id: Int = 0)
 @Dao
 interface TitleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTitle(title: Title)
+    suspend fun insertTitle(title: Title)
 
     @get:Query("select * from Title where id = 0")
     val titleLiveData: LiveData<Title?>
